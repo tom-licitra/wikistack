@@ -7,20 +7,22 @@ const { db, Page, User } = require('./models');
 
 db.authenticate().
 then(() => {
-  console.log('connected to the database');
+  console.log('Connected to the database');
 })
 
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use('/wiki', require('./routes/wiki'));
+
+app.use('/user', require('./routes/user'));
 
 app.get('/', (req, res, next) => {
-  res.send(layout(""));
+  res.redirect('/wiki');
 })
 
 
 const init = async () => {
-  await User.sync({force: true});
-  await Page.sync({force: true});
+  await db.sync({force: true});
 
   const PORT = 3000;
   app.listen(PORT, () => {
