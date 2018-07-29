@@ -23,6 +23,24 @@ app.get('/', (req, res, next) => {
 
 const init = async () => {
   await db.sync({force: true});
+  await User.create({
+    name: 'Tes One',
+    email: 'testone@test.com'
+  })
+  await User.create({
+    name: 'Tes Two',
+    email: 'testtwo@test.com'
+  })
+  await Page.create({
+    title: 'Test Title 1',
+    content: 'Dummy article for testing',
+    authorId: 1
+  })
+  await Page.create({
+    title: 'Test Title 2',
+    content: 'Another dummy article for testing',
+    authorId: 2
+  })
 
   const PORT = 3000;
   app.listen(PORT, () => {

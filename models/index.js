@@ -17,7 +17,7 @@ const Page = db.define('page',{
     title: {type: Sequelize.STRING, allowNull: false},
     content: {type: Sequelize.TEXT,allowNull: false},
     slug: {type: Sequelize.STRING, allowNull: false},
-    status: {type: Sequelize.ENUM('open', 'closed')}
+    status: {type: Sequelize.ENUM('open', 'closed'), defaultValue: 'open'}
 })
 
 const User = db.define('user', {
@@ -25,9 +25,16 @@ const User = db.define('user', {
   email: {type: Sequelize.STRING, allowNull: false, validate: {isEmail: true}}
 })
 
+Page.belongsTo(User, {as: 'author'});
+
 Page.beforeValidate((page, option) => {
   page.slug = createSlug(page.title)
 })
+
+// User.create({
+//   name: 'Tes Tone',
+//   email: 'testone@test.com'
+// })
 
 module.exports = {
   db,
