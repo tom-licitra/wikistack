@@ -4,5 +4,6 @@ const main = require("./main");
 const userList = require("./userList");
 const userPages = require("./userPages");
 const wikipage = require("./wikipage");
+const layout = require("./layout");
 
-module.exports = { addPage, editPage, main, userList, userPages, wikipage };
+module.exports = { layout, addPage, editPage, main, userList, userPages, wikipage };

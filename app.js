@@ -1,26 +1,30 @@
+// npm dependencies
 const express = require('express');
 const app = express();
 const path = require('path');
 
+app.use(express.static(path.join(__dirname, 'public')));
+
+// internal dependencies
 const layout = require('./views/layout');
 const { db, Page, User } = require('./models');
 
+
+// confirm connection to database
 db.authenticate().
 then(() => {
   console.log('Connected to the database');
 })
 
-app.use(express.static(path.join(__dirname, 'public')));
-
+//re-routing to routes files
 app.use('/wiki', require('./routes/wiki'));
-
-app.use('/user', require('./routes/user'));
-
+app.use('/users', require('./routes/users'));
 app.get('/', (req, res, next) => {
   res.redirect('/wiki');
 })
 
-
+// initialize db (sync and seed with two test pages and users)
+// and set app to listen
 const init = async () => {
   await db.sync({force: true});
   await User.create({
