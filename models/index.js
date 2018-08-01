@@ -22,6 +22,7 @@ const Page = db.define('page',{
     status: {type: Sequelize.ENUM('open', 'closed'), defaultValue: 'open'}
 })
 
+User.hasMany(Page);
 Page.belongsTo(User, {as: 'author'});
 
 Page.beforeValidate((page, option) => {

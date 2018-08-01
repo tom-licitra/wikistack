@@ -12,7 +12,6 @@ const { layout, addPage, editPage, main, wikipage } = require('../views');
 router.get('/', async (req, res, next) => {
   try {
     const pageList = await Page.findAll();
-    console.log(pageList);
     res.send(main(pageList));
   }
   catch (error) { next(error)}
